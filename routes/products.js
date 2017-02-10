@@ -1,5 +1,6 @@
 var express = require('express');
 var request = require('request')
+var parseString = require('xml2js').parseString;
 var products = require('../lib/products')
 var router = express.Router();
 
@@ -17,5 +18,13 @@ router.get('/:shop_id/products', function(req, res, next) {
     }
   })
 });
+
+router.get('/hello', function (req, res) {
+  request('http://d3u6s2iyc5cpge.cloudfront.net/products_dev.xml', function (err, response, body) {
+    parseString(body, function (err, result) {
+      console.dir(result);
+    });
+  })
+})
 
 module.exports = router;
