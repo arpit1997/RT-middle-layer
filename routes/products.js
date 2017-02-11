@@ -19,6 +19,17 @@ router.get('/:shop_id/products', function(req, res, next) {
   })
 });
 
+router.get('/:shop_id/products/:product_id', function (req, res, next) {
+  products.fetch_single_product(req.params.product_id, function (err, data) {
+    if (err){
+      res.json({'status': '500'})
+    }
+    else {
+      res.json(data)
+    }
+  })
+})
+
 router.get('/4/shops', function(req, res){
   var URL = "http://77.93.198.186/4/shops"
   request(URL, function (err, response, body) {
