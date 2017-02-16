@@ -8,19 +8,35 @@ var router = express.Router();
 /* GET home page. */
 router.get('/:shop_id/products', function(req, res, next) {
   var url_parts = url.parse(req.url, true)
-  var limit = url_parts.query.limit
-  var offset = url_parts.query.offset
+  var limit = parseInt(url_parts.query.limit)
+  var offset = parseInt(url_parts.query.offset)
+  var category = parseInt(url_parts.query.category)
   console.log(limit)
   console.log(offset)
-  products.convert_product_data(limit, offset, function (err, data) {
+  if (category !== undefined) {
+    next()
+  }
+  products.convert_product_data(limit, offset, function (err, converted_data) {
     if (err){
       res.json({'status': '500'})
     }
     else {
-      res.json(data)
+      products.limit_data(converted_data, limit, offset, function (data) {
+        res.json(data)
+      })
     }
   })
 });
+
+router.get('/:shop_id/products', function (req, res, next) {
+  var url_parts = url.parse(req.url, true)
+  var limit = parseInt(url_parts.query.limit)
+  var offset = parseInt(url_parts.query.offset)
+  var category = parseInt(url_parts.query.category)
+  console.log(limit)
+  console.log(offset)
+
+})
 
 router.get('/:shop_id/products/:product_id', function (req, res, next) {
   products.fetch_single_product(req.params.product_id, function (err, data) {
