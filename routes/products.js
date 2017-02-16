@@ -8,14 +8,22 @@ var router = express.Router();
 /* GET home page. */
 router.get('/:shop_id/products', function(req, res, next) {
   var url_parts = url.parse(req.url, true)
-  var limit = parseInt(url_parts.query.limit)
-  var offset = parseInt(url_parts.query.offset)
-  var category = parseInt(url_parts.query.category)
+  var limit = url_parts.query.limit
+  var offset = url_parts.query.offset
+  var category = url_parts.query.category
   console.log(limit)
   console.log(offset)
+  console.log("hello")
+  if (limit === undefined && offset === undefined){
+    limit = 8
+    offset = 0
+  }
+  limit = parseInt(limit)
+  offset = parseInt(offset)
   if (category !== undefined) {
     next()
   }
+  category = parseInt(category)
   products.convert_product_data(limit, offset, function (err, converted_data) {
     if (err){
       res.json({'status': '500'})
