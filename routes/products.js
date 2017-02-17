@@ -20,29 +20,39 @@ router.get('/:shop_id/products', function(req, res, next) {
   }
   limit = parseInt(limit)
   offset = parseInt(offset)
-  if (category !== undefined) {
+  console.log(category)
+  if (category != undefined) {
+    console.log("world")
     next()
   }
-  category = parseInt(category)
-  products.convert_product_data(limit, offset, function (err, converted_data) {
-    if (err){
-      res.json({'status': '500'})
-    }
-    else {
-      products.limit_data(converted_data, limit, offset, function (data) {
+  else{
+      category = parseInt(category)
+      products.convert_product_data(limit, offset, function (err, converted_data) {
+      if (err){
+        res.json({'status': '500'})
+      }
+      else {
+        products.limit_data(converted_data, limit, offset, function (data) {
         res.json(data)
-      })
-    }
-  })
+        })
+      }
+    })    
+  }
+
 });
 
 router.get('/:shop_id/products', function (req, res, next) {
   var url_parts = url.parse(req.url, true)
-  var limit = parseInt(url_parts.query.limit)
-  var offset = parseInt(url_parts.query.offset)
-  var category = parseInt(url_parts.query.category)
-  console.log(limit)
-  console.log(offset)
+  var limit = url_parts.query.limit
+  var offset = url_parts.query.offset
+  var category = url_parts.query.category
+  if (limit === undefined && offset === undefined){
+    limit = 8
+    offset = 0
+  }
+  products.convert_category_data(category, function(results){
+    res.json(results)
+  })
 
 })
 
