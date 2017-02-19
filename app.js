@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var products = require('./routes/products')
+var authentication = require('./routes/authentication')
 
 var API_VERSION = "v1.2"
 
@@ -21,13 +22,14 @@ app.set('view engine', 'hbs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
 app.use('/' + API_VERSION, products);
+app.use('/' + API_VERSION, authentication)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
