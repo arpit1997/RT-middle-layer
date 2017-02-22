@@ -9,6 +9,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var products = require('./routes/products')
 var authentication = require('./routes/authentication')
+var carts = require('./routes/carts')
 
 var API_VERSION = "v1.2"
 
@@ -30,6 +31,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/' + API_VERSION, products);
 app.use('/' + API_VERSION, authentication)
+app.use('/' + API_VERSION, carts)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
