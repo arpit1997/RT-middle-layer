@@ -1,3 +1,4 @@
+
 var express = require('express')
 var request = require('request')
 var url = require('url')
@@ -9,6 +10,9 @@ var router = express.Router()
 router.get('/cart', function (req, res, next) {
   var auth_header = req.header('Authorization')
   var token = auth_header.split(' ')[1]
+  token = new Buffer(token, 'base64').toString('ascii')
+  token = token.replace(/[^\w\s]/gi, '')
+  console.log(token)
   carts.cart_items(token, function (data) {
     data = JSON.parse(data)
     carts.retrieve_product_sku(data, function (product_sku) {

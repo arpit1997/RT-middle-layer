@@ -16,7 +16,6 @@ router.post('/login/email', function (req, res, next) {
   for (var i in req.body){
     creds = JSON.parse(i)
   }
-  console.log(creds.email)
   
   var username = creds.email
   var password = creds.password
@@ -24,6 +23,7 @@ router.post('/login/email', function (req, res, next) {
   console.log(password)
   auth.gettoken_login_with_email(username, password, function (access_token) {
     auth.user_profile(access_token, function (data) {
+      console.log(data)
       res.json(data)
     })
   })
