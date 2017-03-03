@@ -11,18 +11,13 @@ router.get('/:shop_id/products', function (req, res, next) {
   var limit = url_parts.query.limit
   var offset = url_parts.query.offset
   var category = url_parts.query.category
-  console.log(limit)
-  console.log(offset)
-  console.log('hello')
   if (limit === undefined && offset === undefined) {
     limit = 8
     offset = 0
   }
   limit = parseInt(limit)
   offset = parseInt(offset)
-  console.log(category)
   if (category !== undefined) {
-    console.log('world')
     next()
   }
   else {
@@ -108,7 +103,6 @@ router.get('/:shop_id/products/:product_id', function (req, res, next) {
 router.get('/hello', function (req, res) {
   request('http://d3u6s2iyc5cpge.cloudfront.net/products_dev.xml', function (err, response, body) {
     parseString(body, function (err, result) {
-      console.dir(result)
     })
   })
 })
