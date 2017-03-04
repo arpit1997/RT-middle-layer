@@ -21,8 +21,7 @@ router.get('/cart', function (req, res, next) {
         products.get_category_wise_product(product_data, product_sku, function (cart_products) {
           carts.cart_details(token, function (cart_details) {
             carts.cart_info_items(cart_details, cart_products, data, function (cart) {
-              console.log(JSON.stringify(cart))
-              res.json(JSON.stringify(cart))
+              res.json(cart)
             })
           })
 
@@ -32,4 +31,16 @@ router.get('/cart', function (req, res, next) {
   })
 })
 
+router.get('/cart/info', function(req, res){
+  var auth_header = req.header('Authorization')
+  console.log(auth_header)
+  var token = auth_header.split(' ')[1]
+  token = new Buffer(token, 'base64').toString('ascii')
+  token = token.replace(/[^\w\s]/gi, '')
+  carts.cart_info(token, function(data){
+    console.log(data)
+    res.json(data)
+  })
+
+})
 module.exports = router
