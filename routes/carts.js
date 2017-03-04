@@ -31,7 +31,7 @@ router.get('/cart', function (req, res, next) {
   })
 })
 
-router.get('/cart/info', function(req, res){
+router.get('/cartinfo', function(req, res){
   var auth_header = req.header('Authorization')
   console.log(auth_header)
   var token = auth_header.split(' ')[1]
