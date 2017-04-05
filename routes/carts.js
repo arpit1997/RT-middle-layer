@@ -31,16 +31,16 @@ router.get('/cart', function (req, res, next) {
   })
 })
 
-router.get('/cartinfo', function(req, res){
+router.get('/cart/info', function(req, res){
   var auth_header = req.header('Authorization')
   console.log(auth_header)
-  var token = auth_header.split(' ')[1]
+  var token = auth_header.split(' ')[1] 
   token = new Buffer(token, 'base64').toString('ascii')
   token = token.replace(/[^\w\s]/gi, '')
   carts.cart_info(token, function(data){
     console.log(data)
     res.json(data)
   })
-
+  
 })
 module.exports = router
