@@ -46,8 +46,28 @@ router.get('/cart/info', function(req, res){
 
 router.post('/cart', function(req, res){
   console.log(req.body)
+  var product_id = req.body.product_variant_id
   var auth_header = req.header('Authorization')
   var token = auth_header.split(' ')[1]
+  var qty = 1
   console.log(token)
+  token = new Buffer(token, 'base64').toString('ascii')
+  token = token.replace(/[^\w\s]/gi, '')
+  carts.cart_details(token, function(data){
+    console.log(data)
+    data = JSON.parse(data)
+    var cart_id = data.id
+    console.log(cart_id)
+    products.fetch_single_product(product_id, function(err, item){
+      if(err === null){
+        console.log(item)
+        var product_sku = item.sku
+        carts.add_to_cart(token, cart_id, product_sku, function(data){
+          console.log(data)
+          res.json(data)
+        })
+      }
+    })
+  })
 })
 module.exports = router
