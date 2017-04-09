@@ -43,4 +43,11 @@ router.get('/cart/info', function(req, res){
   })
   
 })
+
+router.post('/cart', function(req, res){
+  console.log(req.body)
+  var auth_header = req.header('Authorization')
+  var token = auth_header.split(' ')[1]
+  console.log(token)
+})
 module.exports = router
