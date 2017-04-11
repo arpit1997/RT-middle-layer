@@ -70,4 +70,18 @@ router.post('/cart', function(req, res){
     })
   })
 })
+router.delete('/:shop_id/cart/:product_id', function(req, res){
+  var product_id = req.params.product_id
+  var auth_header = req.header('Authorization')
+  var token = auth_header.split(' ')[1] 
+  console.log(token)
+  carts.delete_from_cart(token, product_id, function(err, data){
+    if (!err){
+      res.json(data)
+    }
+    else{
+      res.send(err)
+    }
+  })
+})
 module.exports = router
