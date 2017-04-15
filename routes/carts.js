@@ -36,7 +36,6 @@ router.get('/cart/info', function(req, res){
   console.log(auth_header)
   var token = auth_header.split(' ')[1] 
   token = new Buffer(token, 'base64').toString('ascii')
-  token = token.replace(/[^\w\s]/gi, '')
   carts.cart_info(token, function(data){
     console.log(data)
     res.json(data)
@@ -82,6 +81,18 @@ router.delete('/:shop_id/cart/:product_id', function(req, res){
     else{
       res.send(err)
     }
+  })
+})
+router.get('/cart/deliveryinfo', function(req, res){
+  var auth_header = req.header('Authorization')
+  console.log(auth_header)
+  var token = auth_header.split(' ')[1] 
+  token = new Buffer(token, 'base64').toString('ascii')
+  token = token.replace(/[^\w\s]/gi, '')
+  carts.cart_info(token, function(data){
+    carts.shipping_info(token, data, function(data){
+      res.json(data)
+    })
   })
 })
 module.exports = router
