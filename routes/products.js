@@ -104,21 +104,9 @@ router.get('/:shop_id/products/:product_id', function (req, res, next) {
   })
 })
 
-router.get('/hello', function (req, res) {
-    // var wb = new excel.Workbook();
-    // var ws = wb.addWorksheet('Sheet 1');
+router.get('/google-product-feed', function (req, res) {
     var writestr = "";
     var filename = "datafeed.txt";
-    // ws.cell(1, 1).string('id');
-    // ws.cell(1, 2).string('title');
-    // ws.cell(1, 3).string('description');
-    // ws.cell(1, 4).string('link');
-    // ws.cell(1, 5).string('image_link');
-    // ws.cell(1, 6).string('availability');
-    // ws.cell(1, 7).string('price');
-    // ws.cell(1, 8).string('condition');
-    // ws.cell(1, 9).string('adult');
-    // ws.cell(1, 10).string('gender');
     writestr += "id";
     writestr += "\t";
     writestr += "title";
@@ -164,16 +152,6 @@ router.get('/hello', function (req, res) {
                 name = name.replace(/^\s+|\s+$|\s+(?=\s)/g, "");
                 name = name.replace(/\n/g, " ");
                 name = name.replace(/\t/g, " ");
-                // ws.cell(i+2, 1).string(sku);
-                // ws.cell(i+2, 2).string(records[i].name);
-                // ws.cell(i+2, 3).string(records[i].description)
-                // ws.cell(i+2, 4).string(link)
-                // ws.cell(i+2, 5).string(records[i].main_image)
-                // ws.cell(i+2, 6).string("in stock")
-                // ws.cell(i+2, 7).number(records[i].cost)
-                // ws.cell(i+2, 8).string("new")
-                // ws.cell(i+2, 9).string("no")
-                // ws.cell(i+2, 10).string("unisex")
                 writestr += records[i].id;
                 writestr += "\t";
                 writestr += name;
@@ -213,13 +191,6 @@ router.get('/hello', function (req, res) {
         }
     })
 })
-
-
-
-// Set value of cell A1 to 100 as a number type styled with paramaters of style
-
-
-
 
 router.get('/:shop_id/wishlist/is-in-wishlist/:product_id', function (req, res, next) {
   var json_obj = {
