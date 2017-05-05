@@ -166,7 +166,7 @@ router.get('/google-product-feed', function (req, res) {
                 writestr += "\t";
                 writestr += records[i].cost;
                 writestr += "\t";
-                writestr += "new";
+                writestr += "used";
                 writestr += "\t";
                 writestr += "no";
                 writestr += "\t";
