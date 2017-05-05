@@ -102,39 +102,42 @@ router.get('/:shop_id/products/:product_id', function (req, res, next) {
 })
 
 router.get('/hello', function (req, res) {
- var wb = new excel.Workbook();
+    var wb = new excel.Workbook();
 
 // Add Worksheets to the workbook
-var ws = wb.addWorksheet('Sheet 1');
-var ws2 = wb.addWorksheet('Sheet 2');
+    var ws = wb.addWorksheet('Sheet 1');
 
-// Create a reusable style
-var style = wb.createStyle({
-	font: {
-		color: '#FF0800',
-		size: 12
-	},
-	numberFormat: '$#,##0.00; ($#,##0.00); -'
-});
+    ws.cell(1, 1).string('id');
+    ws.cell(1, 2).string('title');
+    ws.cell(1, 3).string('descrition');
+    ws.cell(1, 4).string('link');
+    ws.cell(1, 5).string('image_link');
+    ws.cell(1, 6).string('availability');
+    ws.cell(1, 7).string('price');
+    ws.cell(1, 8).string('condition');
+    ws.cell(1, 9).string('adult');
+    ws.cell(1, 10).string('gender');
+
+    var limit = 0;
+    var offset = 0;
+    products.convert_product_data(limit, offset, function (err, converted_data) {
+        if (err) {
+            res.json({'status': '500'})
+        }
+        else {
+
+        }
+    })
+})
+
+
 
 // Set value of cell A1 to 100 as a number type styled with paramaters of style
-ws.cell(1,1).number(100).style(style);
 
-// Set value of cell B1 to 300 as a number type styled with paramaters of style
-ws.cell(1,2).number(200).style(style);
 
-// Set value of cell C1 to a formula styled with paramaters of style
-ws.cell(1,3).formula('A1 + B1').style(style);
-
-// Set value of cell A2 to 'string' styled with paramaters of style
-ws.cell(2,1).string('string').style(style);
-
-// Set value of cell A3 to true as a boolean type styled with paramaters of style but with an adjustment to the font size.
-ws.cell(3,1).bool(true).style(style).style({font: {size: 14}});
-
-wb.write('Excel.xlsx');
-res.send()
-})
+// wb.write('Excel.xlsx');
+// res.send()
+// });
 
 router.get('/:shop_id/wishlist/is-in-wishlist/:product_id', function (req, res, next) {
   var json_obj = {
